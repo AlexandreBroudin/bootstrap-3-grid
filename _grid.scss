@@ -1,0 +1,114 @@
+//
+// Grid system
+// --------------------------------------------------
+
+
+// Set the container width, and override it for fixed navbars in media queries
+.container {
+  @include container-fixed();
+}
+
+// mobile first defaults
+.row {
+  @include make-row();
+}
+
+//
+// Container and grid column sizing
+//
+
+$grids: -xs, -sm, -md, -lg;
+$classes: ();
+$cols: ();
+
+@for $i from 1 to ($grid-columns + 1) {
+  @each $grid in $grids {
+    $classes: join($classes, unquote(".col#{$grid}-#{$i}"), comma);
+    @if $i < $grid-columns {
+      $cols: join($classes, unquote(".col#{$grid}-#{$i}"), comma);
+    }
+  }
+  // Extra small grid
+  .col-xs-#{$i} { width: percentage(( $i / $grid-columns)); }
+}
+
+// Common styles for small and large grid columns
+
+// Note that `.col-xx-12` doesn't get floated on purpose—there's no need since
+// it's full-width.
+
+#{$cols} {
+  float: left;
+}
+
+#{$classes} {
+  position: relative;
+  // Prevent columns from collapsing when empty
+  min-height: 1px;
+  // Inner gutter via padding
+  padding-left:  ($grid-gutter-width / 2);
+  padding-right: ($grid-gutter-width / 2);
+}
+
+// Small grid
+//
+// Columns, offsets, pushes, and pulls for the small device range, from phones
+// to tablets.
+
+@media (min-width: $screen-tablet) {
+  .container {
+    max-width: $container-tablet;
+  }
+  @for $i from 1 to ($grid-columns + 1) {
+    .col-sm-#{$i} { width: percentage(( $i / $grid-columns)); }
+    @if $i < $grid-columns {
+      .col-sm-push-#{$i}   { left: percentage(( $i / $grid-columns)); }
+      .col-sm-pull-#{$i}   { right: percentage(( $i / $grid-columns)); }
+      .col-sm-offset-#{$i} { margin-left: percentage(( $i / $grid-columns)); }
+    }
+  }
+}
+
+// Medium grid
+//
+// Columns, offsets, pushes, and pulls for the desktop device range.
+
+@media (min-width: $screen-desktop) {
+  .container {
+    max-width: $container-desktop;
+  }
+  @for $i from 1 to ($grid-columns + 1) {
+    .col-md-#{$i} { width: percentage(( $i / $grid-columns)); }
+    @if $i < $grid-columns {
+      .col-md-push-#{$i}   { left: percentage(( $i / $grid-columns)); }
+      .col-md-pull-#{$i}   { right: percentage(( $i / $grid-columns)); }
+      .col-md-offset-#{$i} { margin-left: percentage(( $i / $grid-columns)); }
+    }
+  }
+}
+
+// Large grid
+//
+// Columns, offsets, pushes, and pulls for the large desktop device range.
+
+@media (min-width: $screen-lg-desktop) {
+  .container {
+    max-width: $container-large-desktop;
+  }
+  @for $i from 1 to ($grid-columns + 1) {
+    .col-md-#{$i} { width: percentage(( $i / $grid-columns)); }
+    @if $i < $grid-columns {
+      .col-lg-push-#{$i}   { left: percentage(( $i / $grid-columns)); }
+      .col-lg-pull-#{$i}   { right: percentage(( $i / $grid-columns)); }
+      .col-lg-offset-#{$i} { margin-left: percentage(( $i / $grid-columns)); }
+    }
+  }
+}
+
+// Lang
+
+.rtl {
+  #{$classes} {
+    float: right;
+  }
+}
