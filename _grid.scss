@@ -96,7 +96,7 @@ $cols: ();
     max-width: $container-large-desktop;
   }
   @for $i from 1 to ($grid-columns + 1) {
-    .col-md-#{$i} { width: percentage(( $i / $grid-columns)); }
+    .col-lg-#{$i} { width: percentage(( $i / $grid-columns)); }
     @if $i < $grid-columns {
       .col-lg-push-#{$i}   { left: percentage(( $i / $grid-columns)); }
       .col-lg-pull-#{$i}   { right: percentage(( $i / $grid-columns)); }
